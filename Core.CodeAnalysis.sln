@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pobie.Analyzers", "Pobie.Analyzers\Pobie.Analyzers.csproj", "{AEA3BE85-BC10-4A25-84BF-7F48685EA488}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pobie.Analyzers.Tests", "Pobie.Analyzers.Tests\Pobie.Analyzers.Tests.csproj", "{7C20572B-D7FA-466F-9CB0-C62D64C57C05}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AEA3BE85-BC10-4A25-84BF-7F48685EA488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEA3BE85-BC10-4A25-84BF-7F48685EA488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEA3BE85-BC10-4A25-84BF-7F48685EA488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEA3BE85-BC10-4A25-84BF-7F48685EA488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C20572B-D7FA-466F-9CB0-C62D64C57C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C20572B-D7FA-466F-9CB0-C62D64C57C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C20572B-D7FA-466F-9CB0-C62D64C57C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C20572B-D7FA-466F-9CB0-C62D64C57C05}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
