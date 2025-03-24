@@ -1,0 +1,63 @@
+name: Build and Publish Analyzers to NuGet
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.1.11
+        with:
+          versionSpec: '6.0.x'
+
+      - name: Determine Version
+        id: version
+        uses: gittools/actions/gitversion/command@v3.1.11
+        with:
+          arguments: '/updateProjectFiles'
+      
+      - name: Restore NuGet packages
+        run: dotnet restore
+
+      - name: Build the solution
+        run: dotnet build --configuration Release
+
+      - name: Run Analyzers.Tests
+        run: dotnet test ./Pobie.Analyzers.Tests/Pobie.Analyzers.Tests.csproj --configuration Release
+
+      - name: Build Analyzers project
+        run: dotnet build ./Pobie.Analyzers/Pobie.Analyzers.csproj --configuration Release
+
+      - name: Commit Version Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: update version to ${{ steps.version.outputs.semVer }}" || echo "No changes to commit"
+          git push origin main
+
+      - name: Publish Analyzers to NuGet
+        if: success()
+        run: |
+          dotnet pack ./Pobie.Analyzers/Pobie.Analyzers.csproj --configuration Release --output ./nupkgs
+          dotnet nuget push ./nupkgs/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+
+      - name: Clean up
+        run: rm -rf ./nupkgs
