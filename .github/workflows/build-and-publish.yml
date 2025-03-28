@@ -46,12 +46,15 @@ jobs:
         run: dotnet build ./Pobie.Analyzers/Pobie.Analyzers.csproj --configuration Release
 
       - name: Commit Version Changes
+        if: startsWith(github.ref, 'refs/heads/chore/') == false
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "chore: update version to ${{ steps.version.outputs.semVer }}" || echo "No changes to commit"
+          git tag v${{ steps.version.outputs.semVer }}
           git push origin main
+          git push origin v${{ steps.version.outputs.semVer }}
 
       - name: Publish Analyzers to NuGet
         if: success()
