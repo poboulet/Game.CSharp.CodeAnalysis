@@ -29,10 +29,9 @@ jobs:
 
       - name: Determine Version
         id: version
-        uses: gittools/actions/gitversion/execute@v3.1.11
+        uses: gittools/actions/gitversion/command@v3.1.11
         with:
-          updateProjectFiles: 'true'
-          updateAssemblyInfo: 'true'
+          arguments: '/updateProjectFiles'
           
       - name: Restore NuGet packages
         run: dotnet restore
