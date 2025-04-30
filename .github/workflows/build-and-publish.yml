@@ -33,7 +33,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
-    
+
       - name: Create Git Tag
         if: ${{ steps.version_step.outputs.preReleaseTag == '' }}
         run: |
@@ -41,7 +41,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git tag ${{ steps.version_step.outputs.FullSemVer }}
           git push origin ${{ steps.version_step.outputs.FullSemVer }}
-          
+
       - name: Restore NuGet packages
         run: dotnet restore
 
