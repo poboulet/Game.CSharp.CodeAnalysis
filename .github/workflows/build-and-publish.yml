@@ -27,7 +27,7 @@ jobs:
         id: version_step
         uses: gittools/actions/gitversion/execute@v3.2.0
         with:
-          updateAssemblyInfo: true
+          updateProjectFiles: true
 
       - name: Set up .NET SDK
         uses: actions/setup-dotnet@v4
@@ -35,6 +35,7 @@ jobs:
           dotnet-version: '8.x'
     
       - name: Create Git Tag
+        if: ${{ steps.version_step.outputs.preReleaseTag == '' }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
@@ -48,12 +49,13 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: Run Analyzers.Tests
-        run: dotnet test ./Pobie.Roslyn.Analyzers.Tests/Pobie.Roslyn.Analyzers.Tests.csproj --configuration Release
+        run: dotnet test ./Pobie.Roslyn.Tests/Pobie.Roslyn.Tests.csproj --configuration Release
 
       - name: Pack NuGet package
         run: |
-          dotnet pack ./Pobie.Roslyn.Analyzers/Pobie.Roslyn.Analyzers.csproj --configuration Release --output ./nupkgs
+          dotnet pack ./Pobie.Roslyn/Pobie.Roslyn.csproj --configuration Release --output ./nupkgs
 
       - name: Publish to NuGet
+        if: ${{ steps.version_step.outputs.preReleaseTag == '' }}
         run: |
           dotnet nuget push ./nupkgs/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}

@@ -1,15 +1,17 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Operations;
 
-namespace Pobie.Analyzers.Analyzers.Parameter;
+namespace Pobie.Roslyn.Analyzers.Parameter;
 
 public abstract class ParameterAnalyzer : DiagnosticAnalyzer
 {
     protected abstract string TargetClassName { get; }
     protected abstract string TargetMethodName { get; }
+    protected abstract string TargetModule { get; }
     protected abstract string TargetParameterName { get; }
     protected abstract DiagnosticDescriptor Rule { get; }
 
@@ -23,11 +25,18 @@ public abstract class ParameterAnalyzer : DiagnosticAnalyzer
     private bool MatchesTargetMethod(IInvocationOperation invocationOperation)
     {
         IMethodSymbol methodSymbol = invocationOperation.TargetMethod;
-        bool isTargetClass = methodSymbol.ReceiverType?.Name == TargetClassName;
-        bool isTargetMethod = TargetMethodName == "*" || methodSymbol.Name == TargetMethodName;
-        bool hasTargetParameter = methodSymbol.Parameters.Any(p => p.Name == TargetParameterName);
+        bool isTargetModule = Regex.IsMatch(methodSymbol.ContainingModule.Name, TargetModule);
+        bool isTargetClass = Regex.IsMatch(
+            methodSymbol.ReceiverType?.Name ?? string.Empty,
+            TargetClassName
+        );
+        bool isTargetMethod = Regex.IsMatch(methodSymbol.Name, TargetMethodName);
+        bool hasTargetParameter = methodSymbol.Parameters.Any(p =>
+            Regex.IsMatch(TargetParameterName, p.Name)
+        );
 
         return methodSymbol.MethodKind == MethodKind.Ordinary
+            && isTargetModule
             && isTargetClass
             && isTargetMethod
             && hasTargetParameter;

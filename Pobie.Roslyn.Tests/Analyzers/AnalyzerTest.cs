@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis.Testing.Verifiers;
 
-namespace Analyzers.Tests.Analyzers;
+namespace Pobie.Roslyn.Tests.Analyzers;
 
 public abstract class AnalyzerTest<T>
     where T : DiagnosticAnalyzer, new()

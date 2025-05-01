@@ -1,4 +1,4 @@
-﻿namespace Pobie.Analyzers.Analyzers;
+﻿namespace Pobie.Roslyn.Analyzers;
 
 public enum DiagnosticCategory
 {

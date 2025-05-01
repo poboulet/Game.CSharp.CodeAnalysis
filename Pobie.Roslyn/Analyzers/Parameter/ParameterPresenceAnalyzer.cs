@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 using Diagnostic = Microsoft.CodeAnalysis.Diagnostic;
 using SemanticModel = Microsoft.CodeAnalysis.SemanticModel;
 
-namespace Pobie.Analyzers.Analyzers.Parameter;
+namespace Pobie.Roslyn.Analyzers.Parameter;
 
 public abstract class ParameterPresenceAnalyzer : ParameterAnalyzer
 {

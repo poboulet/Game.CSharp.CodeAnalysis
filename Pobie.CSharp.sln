@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pobie.Roslyn.Analyzers", "Pobie.Roslyn.Analyzers\Pobie.Roslyn.Analyzers.csproj", "{AEA3BE85-BC10-4A25-84BF-7F48685EA488}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pobie.Roslyn", "Pobie.Roslyn\Pobie.Roslyn.csproj", "{AEA3BE85-BC10-4A25-84BF-7F48685EA488}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pobie.Roslyn.Analyzers.Tests", "Pobie.Roslyn.Analyzers.Tests\Pobie.Roslyn.Analyzers.Tests.csproj", "{7C20572B-D7FA-466F-9CB0-C62D64C57C05}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pobie.Roslyn.Tests", "Pobie.Roslyn.Tests\Pobie.Roslyn.Tests.csproj", "{7C20572B-D7FA-466F-9CB0-C62D64C57C05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

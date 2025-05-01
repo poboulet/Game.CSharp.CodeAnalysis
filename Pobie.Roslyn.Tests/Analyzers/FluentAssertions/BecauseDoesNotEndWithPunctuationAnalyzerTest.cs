@@ -1,16 +1,25 @@
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Pobie.Analyzers.Analyzers.FluentAssertions;
+using Pobie.Roslyn.Analyzers.FluentAssertions;
 using Xunit;
 
-namespace Analyzers.Tests.Analyzers.FluentAssertions;
+namespace Pobie.Roslyn.Tests.Analyzers.FluentAssertions;
 
-public class BecauseStartsWithKeywordAnalyzerTest : AnalyzerTest<BecauseStartsWithKeywordAnalyzer>
+public class BecauseDoesNotEndWithPunctuationAnalyzerTest
+    : AnalyzerTest<BecauseDoesNotEndWithPunctuationAnalyzer>
 {
-    [Fact]
-    public async Task ShouldWarn_WhenCallingBooleanAssertion_GivenBecauseDoesNotStartWithKeyword()
+    [Theory]
+    [InlineData(".")]
+    [InlineData(",")]
+    [InlineData("!")]
+    [InlineData("?")]
+    [InlineData(";")]
+    [InlineData(":")]
+    public async Task ShouldWarn_WhenCallingBooleanAssertion_GivenPunctuationAtTheEndOfBecause(
+        string punctuation
+    )
     {
-        const string assertionWithPunctuation = """
+        string assertionWithPunctuation = $$"""
             using FluentAssertions;
             using Xunit;
 
@@ -20,13 +29,13 @@ public class BecauseStartsWithKeywordAnalyzerTest : AnalyzerTest<BecauseStartsWi
                 public void ShouldReturnTrue()
                 {
                     var aValue = true;
-                    aValue.Should().Be(true, "it should be true.");
+                    aValue.Should().Be(true, "because it should be true{{punctuation}}");
                 }
             }
             """;
 
         await ShouldHaveDiagnostic(
-            BecauseStartsWithKeywordAnalyzer.Id,
+            BecauseDoesNotEndWithPunctuationAnalyzer.Id,
             10,
             9,
             assertionWithPunctuation,
@@ -35,7 +44,7 @@ public class BecauseStartsWithKeywordAnalyzerTest : AnalyzerTest<BecauseStartsWi
     }
 
     [Fact]
-    public async Task ShouldNotWarn_WhenCallingBooleanAssertion_GivenBecauseStartsWithKeyword()
+    public async Task ShouldNotWarn_WhenCallingBooleanAssertion_GivenNoPunctuationAtTheEndOfBecause()
     {
         const string assertionWithoutPunctuation = """
             using FluentAssertions;
@@ -56,7 +65,7 @@ public class BecauseStartsWithKeywordAnalyzerTest : AnalyzerTest<BecauseStartsWi
     }
 
     [Fact]
-    public async Task ShouldNotWarn_WhenCallingBooleanAssertion_GivenNoBecause()
+    public async Task ShouldNotWarn_WhenCallingBooleanAssertion_GivenEmptyString()
     {
         const string assertionWithoutPunctuation = """
             using FluentAssertions;
@@ -68,7 +77,7 @@ public class BecauseStartsWithKeywordAnalyzerTest : AnalyzerTest<BecauseStartsWi
                 public void ShouldReturnTrue()
                 {
                     var aValue = true;
-                    aValue.Should().Be(true);
+                    aValue.Should().Be(true, "");
                 }
             }
             """;

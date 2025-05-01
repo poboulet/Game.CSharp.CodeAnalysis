@@ -2,11 +2,11 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Pobie.Analyzers.Validations;
+using Pobie.Roslyn.Validations;
 using Diagnostic = Microsoft.CodeAnalysis.Diagnostic;
 using SemanticModel = Microsoft.CodeAnalysis.SemanticModel;
 
-namespace Pobie.Analyzers.Analyzers.Parameter;
+namespace Pobie.Roslyn.Analyzers.Parameter;
 
 public abstract class ParameterValueAnalyzer : ParameterAnalyzer
 {
