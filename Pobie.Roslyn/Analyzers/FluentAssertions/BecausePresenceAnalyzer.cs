@@ -1,10 +1,9 @@
 ﻿using System.Collections.Immutable;
-using Analyzers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Pobie.Analyzers.Analyzers.Parameter;
+using Pobie.Roslyn.Analyzers.Parameter;
 
-namespace Pobie.Analyzers.Analyzers.FluentAssertions;
+namespace Pobie.Roslyn.Analyzers.FluentAssertions;
 
 [DiagnosticAnalyzer(LanguageNames.CSharp)]
 public class BecausePresenceAnalyzer : ParameterPresenceAnalyzer
@@ -27,7 +26,8 @@ public class BecausePresenceAnalyzer : ParameterPresenceAnalyzer
     public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics =>
         ImmutableArray.Create(Rule);
 
-    protected override string TargetClassName => "*Assertions";
-    protected override string TargetMethodName => "*";
+    protected override string TargetClassName => ".*Assertions";
+    protected override string TargetMethodName => ".*";
     protected override string TargetParameterName => "because";
+    protected override string TargetModule => "FluentAssertions.dll";
 }

@@ -1,4 +1,4 @@
-﻿namespace Pobie.Analyzers.Validations;
+﻿namespace Pobie.Roslyn.Validations;
 
 public interface IValidation
 {

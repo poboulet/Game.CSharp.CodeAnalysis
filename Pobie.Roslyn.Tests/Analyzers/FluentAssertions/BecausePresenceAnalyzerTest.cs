@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Pobie.Analyzers.Analyzers.FluentAssertions;
+using Pobie.Roslyn.Analyzers.FluentAssertions;
 using Xunit;
 
-namespace Analyzers.Tests.Analyzers.FluentAssertions;
+namespace Pobie.Roslyn.Tests.Analyzers.FluentAssertions;
 
 public class BecausePresenceAnalyzerTest : AnalyzerTest<BecausePresenceAnalyzer>
 {

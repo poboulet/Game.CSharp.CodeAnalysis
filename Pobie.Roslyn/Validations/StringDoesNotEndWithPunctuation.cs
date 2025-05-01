@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Pobie.Analyzers.Validations;
+namespace Pobie.Roslyn.Validations;
 
 public class StringDoesNotEndWithPunctuation : IValidation
 {
