@@ -11,7 +11,6 @@ public abstract class ParameterAnalyzer : DiagnosticAnalyzer
 {
     protected abstract string TargetClassName { get; }
     protected abstract string TargetMethodName { get; }
-    protected abstract string TargetModule { get; }
     protected abstract string TargetParameterName { get; }
     protected abstract DiagnosticDescriptor Rule { get; }
 
@@ -25,7 +24,6 @@ public abstract class ParameterAnalyzer : DiagnosticAnalyzer
     private bool MatchesTargetMethod(IInvocationOperation invocationOperation)
     {
         IMethodSymbol methodSymbol = invocationOperation.TargetMethod;
-        bool isTargetModule = Regex.IsMatch(methodSymbol.ContainingModule.Name, TargetModule);
         bool isTargetClass = Regex.IsMatch(
             methodSymbol.ReceiverType?.Name ?? string.Empty,
             TargetClassName
@@ -36,7 +34,6 @@ public abstract class ParameterAnalyzer : DiagnosticAnalyzer
         );
 
         return methodSymbol.MethodKind == MethodKind.Ordinary
-            && isTargetModule
             && isTargetClass
             && isTargetMethod
             && hasTargetParameter;
