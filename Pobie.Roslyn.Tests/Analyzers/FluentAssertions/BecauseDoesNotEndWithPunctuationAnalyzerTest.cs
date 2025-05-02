@@ -13,8 +13,6 @@ public class BecauseDoesNotEndWithPunctuationAnalyzerTest
     [InlineData(",")]
     [InlineData("!")]
     [InlineData("?")]
-    [InlineData(";")]
-    [InlineData(":")]
     public async Task ShouldWarn_WhenCallingBooleanAssertion_GivenPunctuationAtTheEndOfBecause(
         string punctuation
     )

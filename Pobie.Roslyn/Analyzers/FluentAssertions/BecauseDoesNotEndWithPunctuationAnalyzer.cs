@@ -29,8 +29,6 @@ public class BecauseDoesNotEndWithPunctuationAnalyzer : ParameterValueAnalyzer
     protected override string TargetMethodName => ".*";
     protected override string TargetParameterName => "because";
 
-    protected override string TargetModule => "FluentAssertions.dll";
-
     protected override DiagnosticDescriptor Rule => DiagnosticDescriptor;
 
     protected override IValidation Validation { get; } = new StringDoesNotEndWithPunctuation();

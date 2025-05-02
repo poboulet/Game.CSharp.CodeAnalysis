@@ -4,13 +4,11 @@ namespace Pobie.Roslyn.Validations;
 
 public class StringDoesNotEndWithPunctuation : IValidation
 {
+    private readonly char[] _forbiddenPunctuation = ['.', '!', '?', ','];
+
     public bool Validate(object value)
     {
-        if (value is not string { Length: > 0 } valueString)
-        {
-            return true;
-        }
-
-        return !char.IsPunctuation(valueString.Last());
+        return value is not string { Length: > 0 } valueString
+            || _forbiddenPunctuation.All(punctuation => punctuation != valueString.Last());
     }
 }

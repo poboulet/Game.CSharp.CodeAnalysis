@@ -29,5 +29,4 @@ public class BecausePresenceAnalyzer : ParameterPresenceAnalyzer
     protected override string TargetClassName => ".*Assertions";
     protected override string TargetMethodName => ".*";
     protected override string TargetParameterName => "because";
-    protected override string TargetModule => "FluentAssertions.dll";
 }
